@@ -4,8 +4,6 @@
 # This file is needed only when you want to deploy the app to a Linux VM
 
 # install node
-pushd .
-cd ~
 git clone -b devops-fixes https://github.com/daddychukz/More-Recipes.git
 curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
