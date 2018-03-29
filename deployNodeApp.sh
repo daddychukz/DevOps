@@ -72,7 +72,7 @@ else
 echo --------------- configuring nginx server -----------------
 sudo cp -f /etc/nginx/sites-enabled/default nginx-default-server
 sudo rm /etc/nginx/sites-enabled/default
-sudo cp -f ./node-app-nginx-config /etc/nginx/sites-available/recipe-server
+sudo cp -f ./DevOps/node-app-nginx-config /etc/nginx/sites-available/recipe-server
 sudo ln -fs /etc/nginx/sites-available/recipe-server /etc/nginx/sites-enabled/recipe-server
 fi
 sudo service nginx restart
