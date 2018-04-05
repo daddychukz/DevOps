@@ -1,0 +1,9 @@
+variable "clientId" {}
+variable "clientSecret" {}
+variable "tenant" {}
+variable "subId" {}
+variable "location" {}
+variable "backend_username" {}
+variable "backend_password" {}
+variable "client_ssh" {}
+variable "nat_ssh" {}
