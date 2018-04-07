@@ -6,7 +6,7 @@ resource "azurerm_network_security_group" "terraform_nat_nsg" {
 
   security_rule {
     name                       = "SSHRule"
-    priority                   = 1000
+    priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
@@ -18,10 +18,10 @@ resource "azurerm_network_security_group" "terraform_nat_nsg" {
 
   security_rule {
     name                       = "PrivateToPublicRule"
-    priority                   = 1001
+    priority                   = 200
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                   = "Tcp"
+    protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "0-65535"
     source_address_prefix      = "VirtualNetwork"
