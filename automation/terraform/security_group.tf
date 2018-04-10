@@ -1,6 +1,6 @@
 # Create Network Security Group and rule
-resource "azurerm_network_security_group" "terraform_nat_nsg" {
-  name                = "terraform_nat_nsg"
+resource "azurerm_network_security_group" "nat_nsg" {
+  name                = "nat_nsg"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.terraform_rg.name}"
 
@@ -33,8 +33,8 @@ resource "azurerm_network_security_group" "terraform_nat_nsg" {
   }
 }
 
-resource "azurerm_network_security_group" "terraform_private_nsg" {
-  name                = "terraform_private_nsg"
+resource "azurerm_network_security_group" "private_nsg" {
+  name                = "private_nsg"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.terraform_rg.name}"
 
@@ -46,7 +46,7 @@ resource "azurerm_network_security_group" "terraform_private_nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "192.168.0.0/24"
+    source_address_prefix      = "${var.FE_Sub_Address}"
     destination_address_prefix = "*"
   }
 
@@ -58,7 +58,7 @@ resource "azurerm_network_security_group" "terraform_private_nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "5432"
-    source_address_prefix      = "192.168.0.0/24"
+    source_address_prefix      = "${var.FE_Sub_Address}"
     destination_address_prefix = "*"
   }
 
@@ -79,8 +79,8 @@ resource "azurerm_network_security_group" "terraform_private_nsg" {
   }
 }
 
-resource "azurerm_network_security_group" "terraform_public_nsg" {
-  name                = "terraform_public_nsg"
+resource "azurerm_network_security_group" "public_nsg" {
+  name                = "public_nsg"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.terraform_rg.name}"
 
