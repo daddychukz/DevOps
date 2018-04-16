@@ -1,11 +1,12 @@
+#!/bin/bash
+
+setEnvironmentVariables(){
 export NODE_ENV=production
 export configEnvVar=DATABASE_URL
-export DATABASE_URL=postgres://wbxstbmq:1So1LMlT5dVMv8j9i4lLgbBZef7Czu4O@stampy.db.elephantsql.com:5432/wbxstbmq
+export DATABASE_URL=postgres://postgres:daddy@10.0.1.4:5432/postgres?ssl=true
 export configDialect=postgres
 export ClientId=1020610939165-pgmi2vuh8broeahhfo1v6vfqueb92sak.apps.googleusercontent.com
 export CloudName=chuks-andela32
-export SENDGRID_API_USER=daddychuks
-export SENDGRID_API_PASSWORD=Christ111#
 export SECRET=secret123
 export UploadPreset=jdhszyow
 export HOST=https://www.chuks-zone.com.ng
@@ -17,3 +18,6 @@ export swaggerName="Durugo Chukwukadibia"
 export swaggerUrl=https://www.chuks-zone.com.ng
 export swaggerEmail=chukwukadibia.durugo@andela.com
 export swaggerHost=https://www.chuks-zone.com.ng
+}
+
+setEnvironmentVariables
