@@ -16,10 +16,7 @@ resource "azurerm_virtual_machine" "NAT_VM" {
   }
 
   storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04.0-LTS"
-    version   = "latest"
+    id = "${data.azurerm_image.nat_image.id}"
   }
 
   os_profile {
@@ -38,14 +35,6 @@ resource "azurerm_virtual_machine" "NAT_VM" {
 
   tags {
     environment = "Development"
-  }
-
-  # provisioner "local-exec" {
-  #   command = sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
-  # }
-
-  provisioner "local-exec" {
-    command = "sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE"
   }
 }
 
@@ -67,10 +56,7 @@ resource "azurerm_virtual_machine" "client_vm" {
   }
 
   storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04.0-LTS"
-    version   = "latest"
+    id = "${data.azurerm_image.client_image.id}"
   }
 
   os_profile {
@@ -84,6 +70,30 @@ resource "azurerm_virtual_machine" "client_vm" {
     ssh_keys {
       path     = "/home/crystal/.ssh/authorized_keys"
       key_data = "${var.client_ssh}"
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cd /var/app/More-Recipes",
+      "pm2 kill",
+      "sudo add-apt-repository -y ppa:certbot/certbot",
+      "sudo apt-get update",
+      "sudo apt-get install python-certbot-nginx -y",
+      "sudo certbot --nginx --non-interactive --test-cert --redirect --agree-tos -d www.chuks-zone.com.ng -m durugo_chuks@yahoo.com",
+      "export NODE_ENV=production",
+      "export configEnvVar=DATABASE_URL",
+      "export DATABASE_URL=${var.DATABASE_URL}",
+      "export SECRET=${var.SECRET}",
+      "sequelize db:migrate",
+      "pm2 start Server/dist/app.js -n chuks",
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "crystal"
+      host        = "${azurerm_public_ip.client_public_ip.ip_address}"
+      private_key = "${file("~/.ssh/id_rsa")}"
     }
   }
 
@@ -110,10 +120,7 @@ resource "azurerm_virtual_machine" "backend_vm" {
   }
 
   storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04.0-LTS"
-    version   = "latest"
+    id = "${data.azurerm_image.backend_image.id}"
   }
 
   os_profile {

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - package_install
+    - nginx_config
+    - project_setup
+    

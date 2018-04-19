@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: yes
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - package_install
+    

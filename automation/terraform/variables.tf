@@ -11,3 +11,7 @@ variable "vnet_address_space" {}
 variable "FE_Sub_Address" {}
 variable "BE_Sub_Address" {}
 variable "NAT_Address" {}
+variable "domain_name" {}
+variable "PublicIP_Id" {}
+variable "DATABASE_URL" {}
+variable "SECRET" {}

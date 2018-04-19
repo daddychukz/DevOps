@@ -1,0 +1,4 @@
+---
+# handlers file for azure
+- name: Restart NGINX
+  service: name=nginx state=restarted

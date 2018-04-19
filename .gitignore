@@ -10,3 +10,8 @@ debuglog.txt
 automation/terraform/terraform_plugins/**
 **/.vscode/**
 **/*.bak
+automation/backend/variables.json
+automation/frontend/client/variables.json
+automation/frontend/nat/variables.json
+automation/backend/ansible/vars/vars.yml
+automation/frontend/client/ansible/vars/vars.yml

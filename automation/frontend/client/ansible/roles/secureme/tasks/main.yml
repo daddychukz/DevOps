@@ -1,0 +1,21 @@
+
+- name: Add certbot let's encrypt repository
+  apt_repository:
+    repo: ppa:certbot/certbot
+    state: present
+  update_cache: yes
+
+# - name: install let's encrypt certbot tool
+#   apt: name=python-certbot-nginx
+#   register: cert_installed
+
+# - name: configure ssl on server
+#   shell: certbot --nginx --non-interactive --redirect --agree-tos -d www.chuks-zone.com.ng -m durugo_chuks@yahoo.com
+#   when: cert_installed.changed
+
+# - name: Ensure job to renew certificates
+#   cron:
+#     name: Renew certificates
+#     job: "/bin/bash -c '{ /usr/bin/letsencrypt renew --renew-hook \"systemctl reload nginx\" | /usr/bin/logger -t letsencrypt -p syslog.info -i; } 2>&1 | /usr/bin/logger -t letsencrypt -p syslog.err -i'"
+#     cron_file: letsencrypt
+#     special_time: monthly

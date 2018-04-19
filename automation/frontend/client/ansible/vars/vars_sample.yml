@@ -1,0 +1,18 @@
+---
+# vars file for azure
+private_ip: IP_ADDRESS
+domain_name: DOMAIN_NAME
+NODE_ENV: ENVIRONMENT
+configEnvVar: DATABASE_URL
+DATABASE_URL: SEQUELIZE_PRODUCTION_ENV
+configDialect: postgres
+HOST: DOMAIN_NAME
+swaggerJSON: SWAGGER_JSON_URL
+swaggerTitle: SWAGGER_TITLE
+swaggerVersion: SWAGGER_VERSION
+swaggerDescription: SWAGGER_DESCRIPTION
+swaggerName: SWAGGER_NAME
+swaggerUrl: DOMAIN_NAME
+swaggerEmail: EMAIL
+swaggerHost: DOMAIN_NAME
+SECRET: JWT_SECRET

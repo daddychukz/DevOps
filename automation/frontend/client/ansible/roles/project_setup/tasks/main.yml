@@ -1,0 +1,50 @@
+---
+- name: Git Clone Project Repo 1
+  git:
+    repo=https://github.com/daddychukz/More-Recipes.git
+    dest=/var/app/More-Recipes
+    force=yes
+    version=devops-fixes
+  when: install_finished.changed
+  register: git_finished
+
+- name: create .env file
+  template:
+    src=client_env.j2
+    dest=/var/app/More-Recipes/.env
+    mode=0644
+
+- name: create .bash_profile file
+  template:
+    src: bash_profile.j2
+    dest: /etc/profile
+    mode: 0644
+
+- name: NODE | Install npm dependencies
+  shell: npm install --unsafe-perm
+  args:
+    chdir: /var/app/More-Recipes/
+  when: npm_install_finished.changed
+  register: npm_finished
+
+- name: Transpile files and build dist directory
+  shell: npm run postinstall
+  args:
+    chdir: /var/app/More-Recipes/
+
+- debug: msg="hostname = {{ansible_hostname}} path = {{ansible_env.PATH}} user = {{ansible_env.USER}} home = {{ansible_env.HOME}}"
+
+- name: NODE | Start APP
+  shell: pm2 start Server/dist/app.js -n chuks-recipes
+  args:
+    chdir: /var/app/More-Recipes/
+  register: app_started
+  when: npm_finished.changed
+
+- name: Create PM2 startup script
+  become_method: sudo
+  shell: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u {{ansible_env.USER}} --hp {{ansible_env.HOME}}
+  when: app_started.changed
+
+- name: save current process
+  command: pm2 save

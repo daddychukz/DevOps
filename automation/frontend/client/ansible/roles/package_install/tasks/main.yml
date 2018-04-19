@@ -1,0 +1,41 @@
+---
+- name: create directory
+  file:
+    path: /var/app
+    state: directory
+    mode: 0755
+
+- name: create directory
+  file:
+    path: /var/app/setup
+    state: directory
+    mode: 0644
+
+- name: Node.js | Get script
+  get_url:
+    url=https://deb.nodesource.com/setup_8.x
+    dest=/var/app/setup/node_setup.sh
+    mode=0644
+
+- name: Setting up node cont'd
+  command: bash /var/app/setup/node_setup.sh
+
+- name: Install Packages
+  apt: name={{ item }} update_cache=yes state=present
+  with_items:
+    - git
+    - nodejs
+    - nginx
+  register: install_finished
+
+- name: Install global packages
+  npm: 
+    name={{ item }}
+    global=yes
+    state=present
+  with_items:
+    - pm2
+    - express
+    - sequelize-cli
+    - babel-cli
+  register: npm_install_finished

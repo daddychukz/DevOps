@@ -1,0 +1,23 @@
+---
+- name: copying out NGINX default server config
+  shell: cp -f /etc/nginx/sites-enabled/default /var/app/setup/nginx-default-server
+
+- name: Removing NGINX default server
+  file:
+    path=/etc/nginx/sites-enabled/default
+    state=absent
+  notify: Restart NGINX
+
+- name: copying new NGINX server config
+  template:
+    src=nginx_config.j2
+    dest=/etc/nginx/sites-available/recipe-server
+    mode=0644
+  notify: Restart NGINX
+
+- name: Link new nginx server config
+  file:
+    src=/etc/nginx/sites-available/recipe-server
+    dest=/etc/nginx/sites-enabled/recipe-server
+    state=link
+  notify: Restart NGINX

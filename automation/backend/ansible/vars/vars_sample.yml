@@ -1,0 +1,6 @@
+---
+# vars file for azure
+dbname: DATABASE-NAME
+dbuser: DATABASE-USER
+dbpassword: DATABASE-PASSWORD
+ipaddress: IP_ADDRESS

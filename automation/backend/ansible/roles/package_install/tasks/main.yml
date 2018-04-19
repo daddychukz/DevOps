@@ -1,0 +1,64 @@
+---
+- name: Install Packages
+  apt: name={{ item }} update_cache=yes state=present
+  with_items:
+    - postgresql
+    - postgresql-client
+    - postgresql-contrib
+    - libpq-dev
+    - python-psycopg2
+  become: yes
+
+- name: ensure database is created
+  become: true
+  become_user: postgres
+  postgresql_db: state=present name={{dbname}}
+
+- name: ensure the adminpack extension is present
+  become: true
+  become_user: postgres
+  postgresql_ext:
+    name=adminpack
+    state=present
+    db={{ dbname }}
+    login_user={{ dbuser }}
+
+- name: ensure user has access to database
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name={{dbuser}}
+    password={{dbpassword}}
+    state=present
+    priv=CONNECT
+    db={{ dbname }}
+    login_user={{dbuser}}
+
+- name: ensure the user has necessary privileges
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name={{dbuser}}
+    role_attr_flags=LOGIN,CREATEDB
+
+- name: ensure the user has schema privileges
+  become: true
+  become_user: postgres
+  postgresql_privs:
+    privs=ALL
+    type=schema
+    objs=public
+    role=postgres
+    db={{ dbname }}
+
+- name: Update PostgreSQL config
+  template:
+    src=postgresql.conf.j2
+    dest=/etc/postgresql/9.5/main/postgresql.conf
+  notify: Restart postgresql
+
+- name: Update pg_hba config
+  template:
+    src=pg_hba.conf.j2
+    dest=/etc/postgresql/9.5/main/pg_hba.conf
+  notify: Restart postgresql
