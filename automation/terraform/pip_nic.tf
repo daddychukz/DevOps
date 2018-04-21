@@ -42,24 +42,24 @@ resource "azurerm_network_interface" "nat_nic" {
   }
 }
 
-# Create network interface for Frontend instance
-resource "azurerm_network_interface" "public_nic" {
-  name                      = "public_nic"
-  location                  = "${var.location}"
-  resource_group_name       = "${azurerm_resource_group.terraform_rg.name}"
-  network_security_group_id = "${azurerm_network_security_group.public_nsg.id}"
+# # Create network interface for Frontend instance
+# resource "azurerm_network_interface" "public_nic" {
+#   name                      = "public_nic"
+#   location                  = "${var.location}"
+#   resource_group_name       = "${azurerm_resource_group.terraform_rg.name}"
+#   network_security_group_id = "${azurerm_network_security_group.public_nsg.id}"
 
-  ip_configuration {
-    name                          = "ipconfig_public_nic"
-    subnet_id                     = "${azurerm_subnet.front_end_sub.id}"
-    private_ip_address_allocation = "dynamic"
-    public_ip_address_id          = "${azurerm_public_ip.client_public_ip.id}"
-  }
+#   ip_configuration {
+#     name                          = "ipconfig_public_nic"
+#     subnet_id                     = "${azurerm_subnet.front_end_sub.id}"
+#     private_ip_address_allocation = "dynamic"
+#     public_ip_address_id          = "${azurerm_public_ip.client_public_ip.id}"
+#   }
 
-  tags {
-    environment = "Development"
-  }
-}
+#   tags {
+#     environment = "Development"
+#   }
+# }
 
 # Create network interface for Backend instance
 resource "azurerm_network_interface" "private_nic" {

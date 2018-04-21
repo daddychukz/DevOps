@@ -15,3 +15,8 @@ variable "domain_name" {}
 variable "PublicIP_Id" {}
 variable "DATABASE_URL" {}
 variable "SECRET" {}
+variable "application_port" {}
+variable "stateKey" {}
+variable "stateContainer" {}
+variable "stateStorageAccount" {}
+variable "stateResourceGroup" {}

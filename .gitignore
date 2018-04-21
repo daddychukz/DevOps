@@ -1,4 +1,5 @@
 automation/terraform/terraform.tfvars
+automation/terraform/backend_config.tfvars
 automation/terraform/terraform.tfplan
 automation/terraform/terraform.tfstate
 automation/terraform/.terraform.tfstate.lock.info
