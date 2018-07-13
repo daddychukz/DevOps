@@ -1,4 +1,3 @@
-automation/terraform/terraform.tfvars
 automation/terraform/terraform.tfplan
 automation/terraform/terraform.tfstate
 automation/terraform/.terraform.tfstate.lock.info
@@ -10,8 +9,7 @@ debuglog.txt
 automation/terraform/terraform_plugins/**
 **/.vscode/**
 **/*.bak
-automation/backend/variables.json
-automation/frontend/client/variables.json
-automation/frontend/nat/variables.json
+*.json
+*.tfvars
 automation/backend/ansible/vars/vars.yml
 automation/frontend/client/ansible/vars/vars.yml
